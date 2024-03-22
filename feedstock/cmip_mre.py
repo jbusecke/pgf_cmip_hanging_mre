@@ -285,7 +285,7 @@ test_short_lon_only_chunks_load = (
 
 # Make sure that `load=True` works on the above example that actually worked!
 pattern = pattern_from_file_sequence(urls_short, concat_dim='time')
-test_short_lon_only_chunks_load = (
+test_short_time_only_chunks_load = (
     f'Creating {iid}' >> beam.Create(pattern.items())
     | OpenURLWithFSSpec()
     # do not specify file type to accomodate both ncdf3 and ncdf4
