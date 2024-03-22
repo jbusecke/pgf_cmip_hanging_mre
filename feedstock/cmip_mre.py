@@ -282,3 +282,12 @@ test_short_lon_only_chunks_load = (
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
 )
+
+# Try not even writing to zarr
+pattern = pattern_from_file_sequence(urls, concat_dim='time')
+test_full_nowrite = (
+    f'Creating {iid}' >> beam.Create(pattern.items())
+    | OpenURLWithFSSpec()
+    # do not specify file type to accomodate both ncdf3 and ncdf4
+    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
+)
