@@ -282,3 +282,20 @@ test_short_lon_only_chunks_load = (
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
 )
+
+# Make sure that `load=True` works on the above example that actually worked!
+pattern = pattern_from_file_sequence(urls_short, concat_dim='time')
+test_short_lon_only_chunks_load = (
+    f'Creating {iid}' >> beam.Create(pattern.items())
+    | OpenURLWithFSSpec()
+    # do not specify file type to accomodate both ncdf3 and ncdf4
+    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True}, load=True)
+    | Preprocessor()
+    | StoreToZarr(
+        store_name=f'{iid}.zarr',
+        combine_dims=pattern.combine_dim_keys,
+        target_chunks={'time': 300},
+    )
+    | ConsolidateDimensionCoordinates()
+    | ConsolidateMetadata()
+)
