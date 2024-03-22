@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+dfrom dataclasses import dataclass
 
 import apache_beam as beam
 import xarray as xr
@@ -289,5 +289,5 @@ test_full_nowrite = (
     f'Creating {iid}' >> beam.Create(pattern.items())
     | OpenURLWithFSSpec()
     # do not specify file type to accomodate both ncdf3 and ncdf4
-    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
+    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True}, load=True)
 )
