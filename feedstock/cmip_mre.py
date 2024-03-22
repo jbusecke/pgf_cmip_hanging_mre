@@ -1,4 +1,4 @@
-dfrom dataclasses import dataclass
+from dataclasses import dataclass
 
 import apache_beam as beam
 import xarray as xr
