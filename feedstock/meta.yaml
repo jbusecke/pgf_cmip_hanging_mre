@@ -2,12 +2,12 @@ title: "CMIP MRE Hanging Test"
 description: >
   Just a test to see if we can reproduce the hanging issue with fsspec
 recipes:
-  - id: test_full_dynamic_chunks
-    object: "cmip_mre:test_full_dynamic_chunks"
+  # - id: test_full_dynamic_chunks
+  #   object: "cmip_mre:test_full_dynamic_chunks"
   - id: test_short_dynamic_chunks
     object: "cmip_mre:test_short_dynamic_chunks"
-  - id: test_full_time_only_chunks
-    object: "cmip_mre:test_full_time_only_chunks"
+  # - id: test_full_time_only_chunks
+  #   object: "cmip_mre:test_full_time_only_chunks"
   - id: test_short_time_only_chunks
     object: "cmip_mre:test_short_time_only_chunks"
 provenance:

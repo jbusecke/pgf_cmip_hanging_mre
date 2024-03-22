@@ -163,7 +163,7 @@ urls = [
     'https://esgf-data1.llnl.gov/thredds/fileServer/css03_data/CMIP6/CMIP/CMCC/CMCC-ESM2/historical/r1i1p1f1/3hr/pr/gn/v20210114/pr_3hr_CMCC-ESM2_historical_r1i1p1f1_gn_201001010130-201412312230.nc',
 ]
 
-urls_short = urls[0:4]
+urls_short = urls[0:2]
 
 pattern = pattern_from_file_sequence(urls, concat_dim='time')
 test_full_dynamic_chunks = (
