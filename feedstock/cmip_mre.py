@@ -231,3 +231,20 @@ test_short_time_only_chunks = (
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
 )
+
+# few url example with only lon chunking (a full rechunk!)
+pattern = pattern_from_file_sequence(urls_short, concat_dim='time')
+test_short_lon_only_chunks = (
+    f'Creating {iid}' >> beam.Create(pattern.items())
+    | OpenURLWithFSSpec()
+    # do not specify file type to accomodate both ncdf3 and ncdf4
+    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
+    | Preprocessor()
+    | StoreToZarr(
+        store_name=f'{iid}.zarr',
+        combine_dims=pattern.combine_dim_keys,
+        target_chunks={'lon': 10},
+    )
+    | ConsolidateDimensionCoordinates()
+    | ConsolidateMetadata()
+)
