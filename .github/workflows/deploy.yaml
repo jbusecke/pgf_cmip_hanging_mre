@@ -33,7 +33,8 @@ jobs:
                 "service_account_email": "julius-leap-dataflow@leap-pangeo.iam.gserviceaccount.com",
                 "project_id": "leap-pangeo",
                 "temp_gcs_location": "gs://leap-scratch/data-library/temp",
-                "machine_type": "e2-highmem-16"
+                # "machine_type": "e2-highmem-16"
+                "max_num_workers": 1
             },
             "TargetStorage": {
                 "fsspec_class": "gcsfs.GCSFileSystem",
