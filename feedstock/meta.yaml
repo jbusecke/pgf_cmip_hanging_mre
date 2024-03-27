@@ -2,14 +2,14 @@ title: "CMIP MRE Hanging Test"
 description: >
   Just a test to see if we can reproduce the hanging issue with fsspec
 recipes:
-  - id: test_short_time_only_chunks
-    object: "cmip_mre:test_short_time_only_chunks"
-  - id: test_short_lon_only_chunks
-    object: "cmip_mre:test_short_lon_only_chunks"
-  - id: test_short_time_only_chunks_load
-    object: "cmip_mre:test_short_time_only_chunks_load"
-  - id: test_short_lon_only_chunks_load
-    object: "cmip_mre:test_short_lon_only_chunks_load"
+  - id: time_only
+    object: "cmip_mre:time_only"
+  - id: lon_only
+    object: "cmip_mre:lon_only"
+  - id: time_only_load
+    object: "cmip_mre:time_only_load"
+  - id: lon_only_load
+    object: "cmip_mre:lon_only_load"
 provenance:
   providers:
     - name: "Zenodo"
