@@ -16,8 +16,8 @@ recipes:
     object: "cmip_mre:test_short_lon_only_chunks"
   - id: test_short_lon_only_chunks_load
     object: "cmip_mre:test_short_lon_only_chunks_load"
-  - id: test_full_nowrite
-    object: "cmip_mre:test_full_nowrite"
+  - id: test_short_nowrite
+    object: "cmip_mre:test_short_nowrite"
 provenance:
   providers:
     - name: "Zenodo"
