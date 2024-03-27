@@ -7,8 +7,52 @@ from pangeo_forge_recipes.transforms import (
     OpenURLWithFSSpec,
     OpenWithXarray,
     StoreToZarr,
+    Indexed,
+    T,
 )
 
+@dataclass
+class Preprocessor(beam.PTransform):
+    """
+    Preprocessor for xarray datasets.
+    Set all data_variables except for `variable_id` attrs to coord
+    Add additional information
+
+    """
+
+    @staticmethod
+    def _keep_only_variable_id(item: Indexed[T]) -> Indexed[T]:
+        """
+        Many netcdfs contain variables other than the one specified in the `variable_id` facet.
+        Set them all to coords
+        """
+        index, ds = item
+        print(f'Preprocessing before {ds =}')
+        new_coords_vars = [var for var in ds.data_vars if var != ds.attrs['variable_id']]
+        ds = ds.set_coords(new_coords_vars)
+        print(f'Preprocessing after {ds =}')
+        return index, ds
+
+    @staticmethod
+    def _sanitize_attrs(item: Indexed[T]) -> Indexed[T]:
+        """Removes non-ascii characters from attributes see https://github.com/pangeo-forge/pangeo-forge-recipes/issues/586"""
+        index, ds = item
+        for att, att_value in ds.attrs.items():
+            if isinstance(att_value, str):
+                new_value = att_value.encode('utf-8', 'ignore').decode()
+                if new_value != att_value:
+                    print(
+                        f'Sanitized datasets attributes field {att}: \n {att_value} \n ----> \n {new_value}'
+                    )
+                    ds.attrs[att] = new_value
+        return index, ds
+
+    def expand(self, pcoll: beam.PCollection) -> beam.PCollection:
+        return (
+            pcoll
+            | 'Fix coordinates' >> beam.Map(self._keep_only_variable_id)
+            | 'Sanitize Attrs' >> beam.Map(self._sanitize_attrs)
+        )
 
 def print_pass(special_message):
     def inner_fn(elem):
@@ -32,6 +76,8 @@ time_only = (
     | "second print" >> beam.Map(print_pass("after open with fsspec"))
     | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
     | "third print" >> beam.Map(print_pass("after open with xarray"))
+    | Preprocessor()
+    | "fourth print" >> beam.Map(print_pass("after preprocessor"))
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
@@ -46,6 +92,8 @@ lon_only = (
     | "second print" >> beam.Map(print_pass("after open with fsspec"))
     | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
     | "third print" >> beam.Map(print_pass("after open with xarray"))
+    | Preprocessor()
+    | "fourth print" >> beam.Map(print_pass("after preprocessor"))
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
@@ -60,6 +108,8 @@ time_only_load = (
     | "second print" >> beam.Map(print_pass("after open with fsspec"))
     | OpenWithXarray(xarray_open_kwargs={'use_cftime': True}, load=True)
     | "third print" >> beam.Map(print_pass("after open with xarray"))
+    | Preprocessor()
+    | "fourth print" >> beam.Map(print_pass("after preprocessor"))
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
@@ -74,6 +124,8 @@ lon_only_load = (
     | "second print" >> beam.Map(print_pass("after open with fsspec"))
     | OpenWithXarray(xarray_open_kwargs={'use_cftime': True}, load=True)
     | "third print" >> beam.Map(print_pass("after open with xarray"))
+    | Preprocessor()
+    | "fourth print" >> beam.Map(print_pass("after preprocessor"))
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
