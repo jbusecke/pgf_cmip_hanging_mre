@@ -260,7 +260,7 @@ test_short_lon_only_chunks = (
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
-        target_chunks={'lon': 10, 'time':14600, 'bnds': 2, 'lat': 192}
+        target_chunks={'lon': 10, 'time':29200, 'bnds': 2, 'lat': 192}
     )
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
@@ -277,7 +277,7 @@ test_short_lon_only_chunks_load = (
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
-        target_chunks={'lon': 10, 'time':14600, 'bnds': 2, 'lat': 192}
+        target_chunks={'lon': 10, 'time':29200, 'bnds': 2, 'lat': 192}
     )
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
