@@ -54,12 +54,6 @@ class Preprocessor(beam.PTransform):
             | 'Sanitize Attrs' >> beam.Map(self._sanitize_attrs)
         )
 
-def print_pass(special_message):
-    def inner_fn(elem):
-        print(f"STEP {special_message}: {elem}")
-        return elem
-    return inner_fn
-
 iid = 'CMIP6.CMIP.CMCC.CMCC-ESM2.historical.r1i1p1f1.3hr.pr.gn.v20210114'
 
 urls = [
@@ -71,13 +65,9 @@ pattern = pattern_from_file_sequence(urls, concat_dim='time')
 
 time_only = (
     f'Creating {iid}' >> beam.Create(pattern.items())
-    | "first print" >> beam.Map(print_pass("after create"))
     | OpenURLWithFSSpec()
-    | "second print" >> beam.Map(print_pass("after open with fsspec"))
     | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
-    | "third print" >> beam.Map(print_pass("after open with xarray"))
     | Preprocessor()
-    | "fourth print" >> beam.Map(print_pass("after preprocessor"))
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
@@ -87,13 +77,9 @@ time_only = (
 
 lon_only = (
     f'Creating {iid}' >> beam.Create(pattern.items())
-    | "first print" >> beam.Map(print_pass("after create"))
     | OpenURLWithFSSpec()
-    | "second print" >> beam.Map(print_pass("after open with fsspec"))
     | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
-    | "third print" >> beam.Map(print_pass("after open with xarray"))
     | Preprocessor()
-    | "fourth print" >> beam.Map(print_pass("after preprocessor"))
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
@@ -103,13 +89,9 @@ lon_only = (
 
 time_only_load = (
     f'Creating {iid}' >> beam.Create(pattern.items())
-    | "first print" >> beam.Map(print_pass("after create"))
     | OpenURLWithFSSpec()
-    | "second print" >> beam.Map(print_pass("after open with fsspec"))
     | OpenWithXarray(xarray_open_kwargs={'use_cftime': True}, load=True)
-    | "third print" >> beam.Map(print_pass("after open with xarray"))
     | Preprocessor()
-    | "fourth print" >> beam.Map(print_pass("after preprocessor"))
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
@@ -119,13 +101,9 @@ time_only_load = (
 
 lon_only_load = (
     f'Creating {iid}' >> beam.Create(pattern.items())
-    | "first print" >> beam.Map(print_pass("after create"))
     | OpenURLWithFSSpec()
-    | "second print" >> beam.Map(print_pass("after open with fsspec"))
     | OpenWithXarray(xarray_open_kwargs={'use_cftime': True}, load=True)
-    | "third print" >> beam.Map(print_pass("after open with xarray"))
     | Preprocessor()
-    | "fourth print" >> beam.Map(print_pass("after preprocessor"))
     | StoreToZarr(
         store_name=f'{iid}.zarr',
         combine_dims=pattern.combine_dim_keys,
