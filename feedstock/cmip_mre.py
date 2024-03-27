@@ -285,7 +285,7 @@ test_short_lon_only_chunks_load = (
 
 # Try not even writing to zarr
 pattern = pattern_from_file_sequence(urls_short, concat_dim='time')
-test_full_nowrite = (
+test_short_nowrite = (
     f'Creating {iid}' >> beam.Create(pattern.items())
     | OpenURLWithFSSpec()
     # do not specify file type to accomodate both ncdf3 and ncdf4
