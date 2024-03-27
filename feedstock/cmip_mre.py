@@ -18,7 +18,7 @@ urls = [
 pattern = pattern_from_file_sequence(urls, concat_dim='time')
 # full example with only time chunking
 
-test_short_time_only_chunks = (
+time_only = (
     f'Creating {iid}' >> beam.Create(pattern.items())
     | OpenURLWithFSSpec()
     # do not specify file type to accomodate both ncdf3 and ncdf4
@@ -30,7 +30,7 @@ test_short_time_only_chunks = (
     )
 )
 
-test_short_lon_only_chunks = (
+lon_only = (
     f'Creating {iid}' >> beam.Create(pattern.items())
     | OpenURLWithFSSpec()
     # do not specify file type to accomodate both ncdf3 and ncdf4
@@ -42,7 +42,7 @@ test_short_lon_only_chunks = (
     )
 )
 
-test_short_time_only_chunks_load = (
+time_only_load = (
     f'Creating {iid}' >> beam.Create(pattern.items())
     | OpenURLWithFSSpec()
     # do not specify file type to accomodate both ncdf3 and ncdf4
@@ -54,7 +54,7 @@ test_short_time_only_chunks_load = (
     )
 )
 
-test_short_lon_only_chunks_load = (
+lon_only_load = (
     f'Creating {iid}' >> beam.Create(pattern.items())
     | OpenURLWithFSSpec()
     # do not specify file type to accomodate both ncdf3 and ncdf4
