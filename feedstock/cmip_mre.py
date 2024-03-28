@@ -7,8 +7,8 @@ from pangeo_forge_recipes.transforms import (
 )
 
 urls = [
-    "gs://cmip6/pgf-debugging/hanging_bug/file_a.nc",
-    "gs://cmip6/pgf-debugging/hanging_bug/file_b.nc"
+    "gs://cmip6/pgf-debugging/hanging_bug/file_a_huge.nc",
+    "gs://cmip6/pgf-debugging/hanging_bug/file_b_huge.nc"
 ]
 
 pattern = pattern_from_file_sequence(urls, concat_dim='time')
