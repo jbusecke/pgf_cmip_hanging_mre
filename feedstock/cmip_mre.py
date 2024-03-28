@@ -30,6 +30,6 @@ success = (
     | StoreToZarr(
         store_name=f'simple_test.zarr',
         combine_dims=pattern.combine_dim_keys,
-        target_chunks={'x': 100, 'y':200, 'time':3000},
+        target_chunks={'x': 100, 'y':200, 'time':300},
     )
 )
