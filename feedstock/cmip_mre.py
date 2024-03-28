@@ -78,7 +78,7 @@ time_only = (
 lon_only = (
     f'Creating {iid}' >> beam.Create(pattern.items())
     | OpenURLWithFSSpec()
-    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
+    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True, 'chunks':{}})
     | Preprocessor()
     | StoreToZarr(
         store_name=f'{iid}.zarr',
