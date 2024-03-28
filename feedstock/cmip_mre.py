@@ -15,8 +15,7 @@ pattern = pattern_from_file_sequence(urls, concat_dim='time')
 fail = (
     beam.Create(pattern.items())
     | OpenURLWithFSSpec()
-    # do not specify file type to accomodate both ncdf3 and ncdf4
-    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
+    | OpenWithXarray()
     | StoreToZarr(
         store_name=f'simple_test.zarr',
         combine_dims=pattern.combine_dim_keys,
@@ -27,11 +26,10 @@ fail = (
 success = (
     beam.Create(pattern.items())
     | OpenURLWithFSSpec()
-    # do not specify file type to accomodate both ncdf3 and ncdf4
-    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True})
+    | OpenWithXarray()
     | StoreToZarr(
         store_name=f'simple_test.zarr',
         combine_dims=pattern.combine_dim_keys,
-        target_chunks={'x': 100, 'y':200, 'time':300},
+        target_chunks={'x': 100, 'y':200, 'time':3000},
     )
 )
