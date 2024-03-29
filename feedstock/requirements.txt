@@ -1,12 +1,6 @@
-git+https://github.com/ranchodeluxe/xarray@ranchodeluxe-patch-1
-boto3
-requests
-git+https://github.com/ranchodeluxe/datatree@main#egg=xarray-datatree
+git+https://github.com/ranchodeluxe/xarray@ranchodeluxe-patch-1#egg=xarray-datatree
 pangeo-forge-recipes==0.10.7
-git+https://github.com/carbonplan/ndpyramid
 apache-beam==2.52.0
 zarr==2.16.1
-numpy
-git+https://github.com/ranchodeluxe/rioxarray
 gcsfs
 apache-beam[gcp]
