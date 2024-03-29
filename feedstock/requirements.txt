@@ -1,4 +1,4 @@
-git+https://github.com/ranchodeluxe/xarray@ranchodeluxe-patch-1#egg=xarray-datatree
+git+https://github.com/ranchodeluxe/xarray@ranchodeluxe-patch-1#egg=xarray
 pangeo-forge-recipes==0.10.7
 apache-beam==2.52.0
 zarr==2.16.1
