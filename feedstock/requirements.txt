@@ -1,5 +1,5 @@
 xarray
-pangeo-forge-recipes@0.10.7
+pangeo-forge-recipes==0.10.7
 apache-beam==2.52.0
 zarr==2.16.1
 gcsfs
