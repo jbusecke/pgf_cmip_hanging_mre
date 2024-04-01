@@ -128,7 +128,7 @@ lon_only = (
 lon_only_full = (
     f'Creating {iid}' >> beam.Create(pattern_full.items())
     | OpenURLWithFSSpec()
-    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True, copy_to_local=True})
+    | OpenWithXarray(xarray_open_kwargs={'use_cftime': True, copy_to_local:True})
     | Preprocessor()
     | StoreToZarr(
         store_name=f'{iid}.zarr',
