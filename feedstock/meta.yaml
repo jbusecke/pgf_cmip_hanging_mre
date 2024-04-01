@@ -10,6 +10,8 @@ recipes:
     object: "cmip_mre:time_only_load"
   - id: lon_only_load
     object: "cmip_mre:lon_only_load"
+  - id: lon_only_full
+    object: "cmip_mre:lon_only_full"
 provenance:
   providers:
     - name: "Zenodo"

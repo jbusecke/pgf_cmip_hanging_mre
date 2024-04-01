@@ -1,5 +1,7 @@
-pangeo-forge-esgf==0.1.1
-pangeo-forge-recipes==0.10.6
-dynamic-chunks==0.0.2
+xarray
+pangeo-forge-recipes==0.10.7
+apache-beam==2.52.0
+zarr==2.16.1
 gcsfs
 apache-beam[gcp]
+
